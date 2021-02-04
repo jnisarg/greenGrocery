@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body_block %}
+{% comment %} {% load extras %} {% endcomment %}
+
+  <div class="hero-wrap hero-bread" style="background-image: url('{% static 'images/market-1.jpg' %}');">
+    <div class="container">
+      <div class="row no-gutters slider-text align-items-center justify-content-center">
+        <div class="col-md-9 ftco-animate text-center">
+          <p class="breadcrumbs">
+            <!-- <span class="mr-2"><a href="index.html">Home</a></span>
+            <span>About us</span> -->
+          </p>
+          <h1 class="mb-0 bread">Subscription</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="ftco-section subscription-section">
+    <div class="container">
+      <div class="row justify-content-center mb-5">
+        <div class="col-md-7 heading-section ftco-animate text-center">
+          <span class="subheading">Subscriptions</span>
+          <h2 class="mb-4">
+            Want hassle free Vegetables and Fruits at your home?
+          </h2>
+          <p class="">
+            Just select one of our packages and relax back at home without
+            being concerned about the prices.
+          </p>
+        </div>
+      </div>
+      <div class="row ftco-animate">
+        <div class="col-md-12">
+          <div class="carousel-subscription owl-carousel">
+            <div class="item">
+              <div
+                class="card px-3 pt-3 text-center styled-border styled-border--lined__thin"
+              >
+                <h1 class="border-bottom p-3 text-primary">Family</h1>
+                <p class="lead p-3 text-info border-bottom">
+                  ₹1350/Month
+                </p>
+                <ul class="list-unstyled p-3 text-primary">
+                  <li class="pb-2">Upto 5 Vegetables</li>
+                  <li class="p-2">Upto 3 Fruits</li>
+                  <li class="p-2">4 Kilograms Max</li>
+                  <li class="p-2">Free Home Delivery</li>
+                </ul>
+                <a
+                  href="#"
+                  class="btn btn-primary styled-border align-self-center w-50 mb-4"
+                  >Get this plan</a
+                >
+              </div>
+            </div>
+            <div class="item">
+              <div
+                class="card px-3 pt-3 text-center styled-border styled-border--lined__thin"
+              >
+                <h1 class="border-bottom p-3 text-primary">Grand Family</h1>
+                <p class="lead p-3 text-info border-bottom">
+                  ₹2250/Month
+                </p>
+                <ul class="list-unstyled p-3 text-primary">
+                  <li class="pb-2">Upto 6 Vegetables</li>
+                  <li class="p-2">Upto 4 Fruits</li>
+                  <li class="p-2">6 Kilograms Max</li>
+                  <li class="p-2">Free Home Delivery</li>
+                </ul>
+                <a
+                  href="#"
+                  class="btn btn-primary styled-border align-self-center w-50 mb-4"
+                  >Get this plan</a
+                >
+              </div>
+            </div>
+            <div class="item">
+              <div
+                class="card px-3 pt-3 text-center styled-border styled-border--lined__thin"
+              >
+                <h1 class="border-bottom p-3 text-primary">Couple</h1>
+                <p class="lead p-3 text-info border-bottom">
+                  ₹850/Month
+                </p>
+                <ul class="list-unstyled p-3 text-primary">
+                  <li class="pb-2">Upto 4 Vegetables</li>
+                  <li class="p-2">Upto 2 Fruits</li>
+                  <li class="p-2">2 Kilograms Max</li>
+                  <li class="p-2">Free Home Delivery</li>
+                </ul>
+                <a
+                  href="#"
+                  class="btn btn-primary styled-border align-self-center w-50 mb-4"
+                  >Get this plan</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

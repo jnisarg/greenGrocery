@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body_block %}
+<!-- <div class='col-10 col-md-6 mx-auto'>
+    <h1>Add Payment Method</h1>
+    <div class='stripe-payment-form' data-token='{{ publish_key }}'
+        data-next-url='{% if next_url %}{{ next_url }}{% endif %}' data-btn-title='Add New Card'></div>
+</div> -->
+<section class="ftco-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-10 col-md-6 mx-auto">
+                <h1>Add Payment Method</h1>
+                <form action="/charge" method="post" id="payment-form">
+                    <div class="form-row">
+                        <label for="card-element">
+                            Credit or debit card
+                        </label>
+                        <div id="card-element" class="form-control">
+                            <!-- A Stripe Element will be inserted here. -->
+                        </div>
+
+                        <!-- Used to display Element errors. -->
+                        <div id="card-errors" role="alert"></div>
+                    </div>
+
+                    <button class="btn btn-primary styled-border my-2">Submit Payment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,355 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body_block %}
+
+<div class="hero-wrap hero-bread" style="background-image: url('{% static 'images/market-1.jpg' %}');">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <p class="breadcrumbs">
+                    <span class="mr-2"><a href="index.html">Home</a></span>
+                    <span>Checkout</span>
+                </p>
+                <h1 class="mb-0 bread">Checkout</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if not billing_profile %}
+<div class="container my-5">
+    <div class="d-flex justify-content-center">
+        <p class="mr-4">
+            <a href="{% url 'user:login' %}?next={{ request.path }}"
+                class="btn btn-primary styled-border py-2 px-4">Login</a>
+        </p>
+        <p class="align-self-center">
+            OR
+        </p>
+        <p class="ml-4">
+            <a href="{% url 'user:guest_register' %}?next={{ request.path }}"
+                class="btn btn-primary styled-border py-2 px-4">Continue as Guest?</a>
+        </p>
+    </div>
+</div>
+{% else %}
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            {% if address_qs %}
+            <div class="col-xl-7 ftco-animate">
+                <form action="{% url 'carts:checkout' %}" class="billing-form" method="POST">
+                    <!-- {{ request.session.guest_email }} -->
+                    {% csrf_token %}
+                    <h3 class="mb-4 billing-heading">Billing Details</h3>
+                    <div class="row align-items-end">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label
+                                    for="{{ address_form.first_name.id_for_label }}">{{ address_form.first_name.label }}</label>
+                                <small class="form-text text-muted">{{ address_form.first_name.errors }}</small>
+                                <input type="text" name="first_name" class="form-control" maxlength="50"
+                                    value="{{ address_qs.first_name }}" id="id_first_name">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label
+                                    for="{{ address_form.last_name.id_for_label }}">{{ address_form.last_name.label }}</label>
+                                <small class="form-text text-muted">{{ address_form.last_name.errors }}</small>
+                                <input type="text" name="last_name" class="form-control" maxlength="50"
+                                    value="{{ address_qs.last_name }}" id="id_last_name">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label
+                                    for="{{ address_form.address_line_1.id_for_label }}">{{ address_form.address_line_1.label }}</label>
+                                <small class="form-text text-muted">{{ address_form.address_line_1.errors }}</small>
+                                <input type="text" name="address_line_1" class="form-control"
+                                    placeholder="House number and street name" maxlength="50"
+                                    value="{{ address_qs.address_line_1 }}" required id="id_address_line_1">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <small class="form-text text-muted">{{ address_form.address_line_1.errors }}</small>
+                                <input type="text" name="address_line_2" class="form-control"
+                                    placeholder="Appartment, suite, unit etc:" maxlength="50"
+                                    value="{{ address_qs.address_line_2 }}" required id="id_address_line_2">
+                            </div>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ address_form.city.id_for_label }}">{{ address_form.city.label }}</label>
+                                <small class="form-text text-muted">{{ address_form.city.errors }}</small>
+                                <input type="text" name="city" class="form-control" value="Ahmedabad" maxlength="50"
+                                    value="{{ address_qs.city }}" required id="id_city">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label
+                                    for="{{ address_form.zip_code.id_for_label }}">{{ address_form.zip_code.label }}</label>
+                                <small class="form-text text-muted">{{ address_form.zip_code.errors }}</small>
+                                <input type="text" name="zip_code" class="form-control"
+                                    onkeypress="return onlyNumberKey(event)" maxlength="6"
+                                    value="{{ address_qs.zip_code }}" required id="id_zip_code">
+                            </div>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label
+                                    for="{{ address_form.state.id_for_label }}">{{ address_form.state.label }}</label>
+                                <small class="form-text text-muted">{{ address_form.state.errors }}</small>
+                                <input type="text" name="state" class="form-control" value="Gujarat" maxlength="50"
+                                    value="{{ address_qs.state }}" required id="id_state">
+                            </div>
+                        </div>
+                        <!-- <div class="w-100"></div> -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label
+                                    for="{{ address_form.mobile.id_for_label }}">{{ address_form.mobile.label }}</label>
+                                <small class="form-text text-muted">{{ address_form.mobile.errors }}</small>
+                                <input type="text" name="mobile" class="form-control"
+                                    onkeypress="return onlyNumberKey(event)" maxlength="10"
+                                    value="{{ address_qs.mobile }}" id="id_mobile">
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-12">
+                            <div class="form-group">
+                                <label
+                                    for="{{ address_form.email.id_for_label }}">{{ address_form.email.label }}</label>
+                                <small class="form-text text-muted">{{ address_form.email.errors }}</small>
+                                {% if request.user.is_authenticated %}
+                                <input type="text" name="email" class="form-control" maxlength="50"
+                                    value="{{ request.user.email }}" id="id_email">
+                                {% else %}
+                                {{ address_form.email }}
+                                {% endif %}
+                            </div>
+                        </div> -->
+                        <div class="w-100"></div>
+                        <div class="col-md-12">
+                            <div class="form-group mt-2">
+                                <!-- <div class="radio">
+                                    <label class="mr-3"><input type="radio" name="optradio" /> Create an
+                                        Account?
+                                    </label>
+                                    <label><input type="radio" name="optradio" /> Ship to
+                                        different address</label>
+                                </div> -->
+                                <input type="submit" value="Place an Order" class="btn btn-primary styled-border">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- END -->
+            </div>
+            {% else %}
+            <div class="col-xl-7 ftco-animate">
+                <form action="{% url 'carts:checkout' %}" class="billing-form" method="POST">
+                    <!-- {{ request.session.guest_email }} -->
+                    {% csrf_token %}
+                    <h3 class="mb-4 billing-heading">Billing Details</h3>
+                    <div class="row align-items-end">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label
+                                    for="{{ address_form.first_name.id_for_label }}">{{ address_form.first_name.label }}</label>
+                                <small class="form-text text-muted">{{ address_form.first_name.errors }}</small>
+                                {% if request.user.is_authenticated %}
+                                <input type="text" name="first_name" class="form-control" maxlength="50"
+                                    value="{{ request.user.first_name }}" id="id_first_name">
+                                {% else %}
+                                {{ address_form.first_name }}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label
+                                    for="{{ address_form.last_name.id_for_label }}">{{ address_form.last_name.label }}</label>
+                                <small class="form-text text-muted">{{ address_form.last_name.errors }}</small>
+                                {% if request.user.is_authenticated %}
+                                <input type="text" name="last_name" class="form-control" maxlength="50"
+                                    value="{{ request.user.last_name }}" id="id_last_name">
+                                {% else %}
+                                {{ address_form.last_name }}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label
+                                    for="{{ address_form.address_line_1.id_for_label }}">{{ address_form.address_line_1.label }}</label>
+                                <small class="form-text text-muted">{{ address_form.address_line_1.errors }}</small>
+                                {{ address_form.address_line_1 }}
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <small class="form-text text-muted">{{ address_form.address_line_1.errors }}</small>
+                                {{ address_form.address_line_2 }}
+                            </div>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ address_form.city.id_for_label }}">{{ address_form.city.label }}</label>
+                                <small class="form-text text-muted">{{ address_form.city.errors }}</small>
+                                {{ address_form.city }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label
+                                    for="{{ address_form.zip_code.id_for_label }}">{{ address_form.zip_code.label }}</label>
+                                <small class="form-text text-muted">{{ address_form.zip_code.errors }}</small>
+                                {{ address_form.zip_code }}
+                            </div>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label
+                                    for="{{ address_form.state.id_for_label }}">{{ address_form.state.label }}</label>
+                                <small class="form-text text-muted">{{ address_form.state.errors }}</small>
+                                {{ address_form.state }}
+                            </div>
+                        </div>
+                        <!-- <div class="w-100"></div> -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label
+                                    for="{{ address_form.mobile.id_for_label }}">{{ address_form.mobile.label }}</label>
+                                <small class="form-text text-muted">{{ address_form.mobile.errors }}</small>
+                                {% if request.user.is_authenticated %}
+                                <input type="text" name="mobile" class="form-control"
+                                    onkeypress="return onlyNumberKey(event)" maxlength="10"
+                                    value="{{ request.user.mobile }}" id="id_mobile">
+                                {% else %}
+                                {{ address_form.mobile }}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-12">
+                            <div class="form-group">
+                                <label
+                                    for="{{ address_form.email.id_for_label }}">{{ address_form.email.label }}</label>
+                                <small class="form-text text-muted">{{ address_form.email.errors }}</small>
+                                {% if request.user.is_authenticated %}
+                                <input type="text" name="email" class="form-control" maxlength="50"
+                                    value="{{ request.user.email }}" id="id_email">
+                                {% else %}
+                                {{ address_form.email }}
+                                {% endif %}
+                            </div>
+                        </div> -->
+                        <div class="w-100"></div>
+                        <div class="col-md-12">
+                            <div class="form-group mt-2">
+                                <!-- <div class="radio">
+                                    <label class="mr-3"><input type="radio" name="optradio" /> Create an
+                                        Account?
+                                    </label>
+                                    <label><input type="radio" name="optradio" /> Ship to
+                                        different address</label>
+                                </div> -->
+                                <input type="submit" value="Place an Order" class="btn btn-primary styled-border">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- END -->
+            </div>
+            {% endif %}
+            <div class="col-xl-5">
+                <div class="row mt-5 pt-3">
+                    <div class="col-md-12 d-flex mb-5">
+                        <div class="cart-detail cart-total p-3 p-md-4">
+                            <h3>Cart Totals</h3>
+                            <p class="d-flex">
+                                <span>Subtotal</span>
+                                <span>₹{{ cart.subtotal }}</span>
+                            </p>
+                            <p class="d-flex">
+                                <span>Delivery</span>
+                                {% if cart.subtotal < 100 %}
+                                <span>₹20.00</span>
+                                {% else %}
+                                <span>₹0.00</span>
+                                {% endif %}
+                            </p>
+                            <p class="d-flex">
+                                <span>Discount</span>
+                                <span>₹{{ cart.discount_amount }}</span>
+                            </p>
+                            <hr />
+                            <p class="d-flex total-price">
+                                <span>Total</span>
+                                <span>₹{{ order.total }}</span>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-12">
+                        <div class="cart-detail p-3 p-md-4">
+                            <h3 class="billing-heading mb-4">Payment Method</h3>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="radio">
+                                        <label><input type="radio" name="optradio" class="mr-2" />Direct Bank
+                                            Tranfer</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="radio">
+                                        <label><input type="radio" name="optradio" class="mr-2" />
+                                            Check Payment</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="radio">
+                                        <label><input type="radio" name="optradio" class="mr-2" />
+                                            Paypal</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="" class="mr-2" /> I
+                                            have read and accept the terms and conditions</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <p>
+                                <a href="#" class="btn btn-primary styled-border py-2 px-4">Place an order</a>
+                            </p>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+            <!-- .col-md-8 -->
+        </div>
+    </div>
+</section>
+<script>
+    function onlyNumberKey(evt) {
+        var ASCIICode = (evt.which) ? evt.which : evt.keyCode
+        if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+            return false;
+        return true;
+    }
+</script>
+{% endif %}
+<!-- .section -->
+
+{% endblock %}
